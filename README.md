@@ -1,6 +1,6 @@
 # Developing blockchain app with flutter
 
-In this article, we have managed to create a decentralized application, on starting this app with `flutter run`, here is how the final working version will look like.
+In this project, we have managed to create a decentralized application, on starting this app with `flutter run`, here is how the final working version will look like.
 
 ![](https://github.com/manaspratap/smart_contract/blob/main/readme_assets/ezgif.com-resize.gif)
 
