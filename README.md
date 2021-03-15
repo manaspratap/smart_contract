@@ -1,5 +1,7 @@
 # smart_contract
 
+In this article, we have managed to create a decentralized application, on starting this app with `flutter run`, here is how the final working version will look like.
+
 A new Flutter project.
 
 ## Getting Started
