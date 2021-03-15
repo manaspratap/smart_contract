@@ -1,18 +1,7 @@
-# smart_contract
+# Developing blockchain app with flutter
 
 In this article, we have managed to create a decentralized application, on starting this app with `flutter run`, here is how the final working version will look like.
 
-A new Flutter project.
+![](https://github.com/manaspratap/smart_contract/blob/main/readme_assets/ezgif.com-resize.gif)
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Here the user can deposit installments of ₹3 to reach a threshold of ₹12. When they do reach this threshold, we return the principal of ₹12 + interest of ₹3 = ₹15 to them. They can now withdraw the amount from this account.
