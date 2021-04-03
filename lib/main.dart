@@ -30,21 +30,9 @@ class _HomePageState extends State<HomePage> {
 
   Client httpClient;
   Web3Client ethClient;
+  // JSON-RPC is a remote procedure call protocol encoded in JSON
+  // Remote Procedure Call (RPC) is about executing a block of code on another server
   String rpcUrl = 'http://0.0.0.0:7545';
-
-  String privateKey =
-      '26462ae4803020c6d5101f7f409888bed0c8153ea262a9479a8aabbcda03bd2c';
-  Credentials credentials;
-  EthereumAddress myAddress;
-
-  String abi;
-  EthereumAddress contractAddress;
-
-  DeployedContract contract;
-  ContractFunction getBalanceAmount,
-      getDepositAmount,
-      addDepositAmount,
-      withdrawBalance;
 
   @override
   void initState() {
@@ -53,7 +41,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> initialSetup() async {
+    /// This will start a client that connects to a JSON RPC API, available at RPC URL.
+    /// The httpClient will be used to send requests to the [RPC server].
     httpClient = Client();
+
+    /// It connects to an Ethereum [node] to send transactions, interact with smart contracts, and much more!
     ethClient = Web3Client(rpcUrl, httpClient);
 
     await getCredentials();
@@ -61,10 +53,22 @@ class _HomePageState extends State<HomePage> {
     await getContractFunctions();
   }
 
+  /// This will construct [credentials] with the provided [privateKey]
+  /// and load the Ethereum address in [myAdderess] specified by these credentials.
+  String privateKey =
+      'af06facb9d45d228c301a0d9bd286fdee2be38c3138f65e8f521c99ca12b1810';
+  Credentials credentials;
+  EthereumAddress myAddress;
+
   Future<void> getCredentials() async {
     credentials = await ethClient.credentialsFromPrivateKey(privateKey);
     myAddress = await credentials.extractAddress();
   }
+
+  /// This will parse an Ethereum address of the contract in [contractAddress]
+  /// from the hexadecimal representation present inside the [ABI]
+  String abi;
+  EthereumAddress contractAddress;
 
   Future<void> getDeployedContract() async {
     String abiString = await rootBundle.loadString('src/abis/Investment.json');
@@ -74,6 +78,13 @@ class _HomePageState extends State<HomePage> {
     contractAddress =
         EthereumAddress.fromHex(abiJson['networks']['5777']['address']);
   }
+
+  /// This will help us to find all the [public functions] defined by the [contract]
+  DeployedContract contract;
+  ContractFunction getBalanceAmount,
+      getDepositAmount,
+      addDepositAmount,
+      withdrawBalance;
 
   Future<void> getContractFunctions() async {
     contract = DeployedContract(
@@ -85,6 +96,8 @@ class _HomePageState extends State<HomePage> {
     withdrawBalance = contract.function('withdrawBalance');
   }
 
+  /// This will call a [functionName] with [functionArgs] as parameters
+  /// defined in the [contract] and returns its result
   Future<List<dynamic>> readContract(
     ContractFunction functionName,
     List<dynamic> functionArgs,
@@ -98,6 +111,8 @@ class _HomePageState extends State<HomePage> {
     return queryResult;
   }
 
+  /// Signs the given transaction using the keys supplied in the [credentials] object
+  /// to upload it to the client so that it can be executed
   Future<void> writeContract(
     ContractFunction functionName,
     List<dynamic> functionArgs,
