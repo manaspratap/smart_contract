@@ -11,4 +11,4 @@ Here the user can deposit installments of ₹3 to reach a threshold of ₹12. Wh
 And below is a detiled video on the same.
 
 <a href="https://www.youtube.com/watch?v=h9bW05AclfA" target="_blank"><img src="http://img.youtube.com/vi/h9bW05AclfA/0.jpg" 
-alt="Developing blockchain app with flutter" width="240" height="180" border="10" /></a>
+alt="Developing blockchain app with flutter" width="480" height="360" border="10" /></a>
