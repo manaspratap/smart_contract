@@ -2,34 +2,37 @@
 pragma solidity 0.5.16;
 
 contract Investment {
+    event CheckBalance(address indexed from, uint256 amount);
     // amount returned to user
-    int256 balanceAmount;
+    uint256 balanceAmount;
     // amount deposited by user
-    int256 depositAmount;
+    uint256 depositAmount;
     // minimum amount to be deposited by user
-    int256 thresholdAmount;
+    uint256 thresholdAmount;
     // amount to be returned in addition to depositAmount to user
-    int256 returnOnInvestment;
+    uint256 returnOnInvestment;
 
     constructor() public {
-        balanceAmount = 0;
+        balanceAmount = msg.sender.balance/(1e16);
         depositAmount = 0;
         thresholdAmount = 12;
         returnOnInvestment = 3;
+
+        emit CheckBalance(msg.sender, balanceAmount );
     }
 
     // read operation
-    function getBalanceAmount() public view returns (int256) {
+    function getBalanceAmount() public view returns (uint256) {
         return balanceAmount;
     }
 
     // read operation
-    function getDepositAmount() public view returns (int256) {
+    function getDepositAmount() public view returns (uint256) {
         return depositAmount;
     }
 
     // write operation
-    function addDepositAmount(int256 amount) public {
+    function addDepositAmount(uint256 amount) public {
         depositAmount = depositAmount + amount;
 
         if (depositAmount >= thresholdAmount) {

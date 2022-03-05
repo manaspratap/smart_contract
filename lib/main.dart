@@ -26,7 +26,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int balance = 0, totalDeposits = 0, installmentAmount = 3;
+   int totalDeposits = 0, installmentAmount = 3;
+   double balance = 0;
 
   Client httpClient;
   Web3Client ethClient;
@@ -56,7 +57,7 @@ class _HomePageState extends State<HomePage> {
   /// This will construct [credentials] with the provided [privateKey]
   /// and load the Ethereum address in [myAdderess] specified by these credentials.
   String privateKey =
-      'af06facb9d45d228c301a0d9bd286fdee2be38c3138f65e8f521c99ca12b1810';
+      '84cbcf56df32699faa54a3030c821cc734570abeebe15d3d922895ed7f560a9b';
   Credentials credentials;
   EthereumAddress myAddress;
 
@@ -103,6 +104,7 @@ class _HomePageState extends State<HomePage> {
     List<dynamic> functionArgs,
   ) async {
     var queryResult = await ethClient.call(
+      sender: myAddress,
       contract: contract,
       function: functionName,
       params: functionArgs,
@@ -174,7 +176,11 @@ class _HomePageState extends State<HomePage> {
                     heroTag: 'check_balance',
                     onPressed: () async {
                       var result = await readContract(getBalanceAmount, []);
-                      balance = result?.first?.toInt();
+                      var _balance  = result?.first?.toInt();
+                      if (_balance > 0)
+                        balance = _balance / 100;
+                      else
+                        balance = 0;
                       setState(() {});
                     },
                     label: Text('Check Balance'),
