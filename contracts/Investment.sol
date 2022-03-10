@@ -13,7 +13,7 @@ contract Investment {
     uint256 returnOnInvestment;
 
     constructor() public {
-        balanceAmount = msg.sender.balance/(1e16);
+        balanceAmount = getBalanceAmount();
         depositAmount = 0;
         thresholdAmount = 12;
         returnOnInvestment = 3;
@@ -23,7 +23,7 @@ contract Investment {
 
     // read operation
     function getBalanceAmount() public view returns (uint256) {
-        return balanceAmount;
+        return msg.sender.balance/(1e16);
     }
 
     // read operation

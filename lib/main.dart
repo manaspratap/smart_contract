@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart';
+import 'package:web3dart/browser.dart';
 import 'package:web3dart/web3dart.dart';
 
 void main() {
@@ -35,6 +36,8 @@ class _HomePageState extends State<HomePage> {
   // Remote Procedure Call (RPC) is about executing a block of code on another server
   String rpcUrl = 'http://0.0.0.0:7545';
 
+  int myBalance;
+
   @override
   void initState() {
     initialSetup();
@@ -57,7 +60,7 @@ class _HomePageState extends State<HomePage> {
   /// This will construct [credentials] with the provided [privateKey]
   /// and load the Ethereum address in [myAdderess] specified by these credentials.
   String privateKey =
-      '84cbcf56df32699faa54a3030c821cc734570abeebe15d3d922895ed7f560a9b';
+      '1bbb13ba812d93b4ef0835b4fff8005d73c213d01e123e4ed952444ccca506d4';
   Credentials credentials;
   EthereumAddress myAddress;
 
@@ -88,8 +91,8 @@ class _HomePageState extends State<HomePage> {
       withdrawBalance;
 
   Future<void> getContractFunctions() async {
-    contract = DeployedContract(
-        ContractAbi.fromJson(abi, "Investment"), contractAddress);
+    contract =
+        DeployedContract(ContractAbi.fromJson(abi, "Investment"), contractAddress);
 
     getBalanceAmount = contract.function('getBalanceAmount');
     getDepositAmount = contract.function('getDepositAmount');
@@ -175,12 +178,19 @@ class _HomePageState extends State<HomePage> {
                   child: FloatingActionButton.extended(
                     heroTag: 'check_balance',
                     onPressed: () async {
-                      var result = await readContract(getBalanceAmount, []);
-                      var _balance  = result?.first?.toInt();
-                      if (_balance > 0)
-                        balance = _balance / 100;
-                      else
-                        balance = 0;
+
+
+                      // var result = await readContract(getBalanceAmount, []);
+                      // var _balance  = result?.first?.toInt();
+
+                      var ethBalance = await ethClient.getBalance(myAddress);
+                      var contractBalance = await ethClient.
+                      getBalance(EthereumAddress.fromHex('0xa4D4008d58a05E7dd71227df74133087DF602cb9'));
+                      balance = contractBalance.getInEther.toDouble();
+                      // if (balance > 0)
+                      //   balance = balance / 100;
+                      // else
+                      //   balance = 0;
                       setState(() {});
                     },
                     label: Text('Check Balance'),
